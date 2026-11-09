@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowDown, ArrowUpRight, Pause, Play } from "lucide-react";
 import { site } from "@/data/site";
 
@@ -67,9 +67,15 @@ export function Hero({ book }: { book: () => void }) {
         </>
       )}
       <div className="brand-intro" aria-hidden="true">
+        <div className="brand-ink-specks">
+          {Array.from({ length: 14 }, (_, i) => <i key={i} style={{ "--drop-x": `${8 + (i * 29) % 84}%`, "--drop-delay": `${(i % 5) * 85}ms`, "--drop-size": `${3 + i % 4}px` } as CSSProperties} />)}
+        </div>
         <div className="brand-intro-content">
-          <svg viewBox="0 0 200 40" fill="none"><path d="M12 20h57m62 0h57M85 20l15-12 15 12-15 12z" stroke="currentColor" strokeWidth="1"/><circle cx="100" cy="20" r="3" fill="currentColor"/></svg>
-          <p>GOOD VIBE<span>TATTOO CLUB</span></p>
+          <svg className="intro-needle" viewBox="0 0 200 70" fill="none">
+            <path className="intro-draw" pathLength="1" d="M15 35h48m74 0h48M87 13l26 26-13 13-26-26zM94 20l13-13 15 15-13 13M80 32l-7 7m28 7-18 18m-10 0 10-10M91 26l12 12" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+            <circle className="intro-ink-dot" cx="80" cy="65" r="2" fill="currentColor"/>
+          </svg>
+          <p><span className="brand-intro-name">{Array.from("GOOD VIBE").map((letter, i) => <span key={i} style={{ "--letter": i } as CSSProperties}>{letter === " " ? "\u00a0" : letter}</span>)}</span><span className="brand-intro-subtitle">TATTOO CLUB</span></p>
           <span className="brand-intro-motto">ARTE COM ATITUDE E ALMA.</span>
           <div className="brand-intro-line" />
         </div>
