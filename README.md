@@ -63,6 +63,8 @@ Na revisão visual, passaram também: carregamento de todas as fotografias locai
 
 Validação da intro: larguras 360/390/768/1024/1440 px, progresso de tinta por scroll, ausência de overflow, link de pular e movimento reduzido. Os três fluxos de orçamento, Escape, retorno de foco e menu mobile continuam validados. A nova foto de Franja identificada no chat em 09/11/2026 ainda não está disponível como arquivo local e não foi substituída por uma fotografia diferente.
 
-A abertura do site agora é a hero fotográfica com uma intro animada da marca (2,2 segundos, CSS, sem bloquear cliques ou rolagem). O efeito de tinta aparece mais abaixo. Com movimento reduzido, a intro da marca não é exibida e a fotografia aparece imediatamente.
+A abertura do site agora é a hero fotográfica com uma intro animada da marca (2,55 segundos, CSS, sem bloquear cliques ou rolagem). O efeito de tinta aparece mais abaixo. Com movimento reduzido, a intro da marca não é exibida e a fotografia aparece imediatamente.
 
 A intro animada inclui entrada escalonada das letras, desenho do traço de uma máquina de tattoo, gotas decorativas, saída em cortina e aproximação suave da foto. As animações são finitas, não usam timers JavaScript e não bloqueiam os botões. Movimento reduzido desativa toda a sequência.
+
+`src/components/ui/TattooInstruments.tsx` desenha máquina de bobina, cartucho, frasco de tinta com batoque e caneta de tatuagem em SVG com gradientes metálicos. Entram pelos quatro cantos com delays de 0/130/220/320 ms, movimento finito e dimensões específicas para celular. Todo o conjunto é decorativo, não recebe foco e desaparece com movimento reduzido. Validado no navegador: quatro instrumentos animados, encerramento da intro, layouts de 360 a 1440 px e versão reduzida.

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowDown, ArrowUpRight, Pause, Play } from "lucide-react";
+import { TattooInstruments } from "@/components/ui/TattooInstruments";
 import { site } from "@/data/site";
 
 export function Hero({ book }: { book: () => void }) {
@@ -67,6 +68,7 @@ export function Hero({ book }: { book: () => void }) {
         </>
       )}
       <div className="brand-intro" aria-hidden="true">
+        <TattooInstruments />
         <div className="brand-ink-specks">
           {Array.from({ length: 14 }, (_, i) => <i key={i} style={{ "--drop-x": `${8 + (i * 29) % 84}%`, "--drop-delay": `${(i % 5) * 85}ms`, "--drop-size": `${3 + i % 4}px` } as CSSProperties} />)}
         </div>

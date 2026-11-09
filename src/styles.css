@@ -1529,7 +1529,7 @@ html[data-ink-active] header {background:#080808;}
 #abertura {scroll-margin-top:0;}
 
 /* Abertura curta sobre a foto; não captura cliques nem bloqueia navegação. */
-.brand-intro{position:absolute;inset:0;background:radial-gradient(ellipse at center,#1b1a17,#080808 65%);z-index:5;display:grid;place-items:center;pointer-events:none;overflow:hidden;animation:brand-intro-out 650ms cubic-bezier(.76,0,.24,1) 1550ms forwards;}
+.brand-intro{position:absolute;inset:0;background:radial-gradient(ellipse at center,#1b1a17,#080808 65%);z-index:5;display:grid;place-items:center;pointer-events:none;overflow:hidden;animation:brand-intro-out 650ms cubic-bezier(.76,0,.24,1) 1900ms forwards;}
 .brand-intro-content{position:relative;text-align:center;color:#e9e7e0;padding:25px;}
 .brand-intro-content>.intro-needle{width:190px;margin:0 auto 25px;animation:needle-mark 220ms ease-in-out 500ms 3 alternate;}
 .intro-draw{stroke-dasharray:1;stroke-dashoffset:1;animation:needle-draw 800ms ease-out forwards;}
@@ -1555,3 +1555,20 @@ html[data-ink-active] header {background:#080808;}
 @media(prefers-reduced-motion:reduce){.brand-intro{display:none;}}
 .artists-section, .services {overflow-x:clip;}
 #abertura {scroll-margin-top:0;}
+
+/* Instrumentos entram pelos quatro cantos em uma sequência finita. */
+.tattoo-instruments{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.instrument-defs{position:absolute;}
+.instrument{position:absolute;filter:drop-shadow(0 14px 15px #0009);animation:instrument-arrive 1550ms cubic-bezier(.16,1,.3,1) var(--tool-delay) both;will-change:transform;}
+.instrument>svg{width:100%;height:100%;}
+.instrument-coil{width:clamp(210px,25vw,360px);left:-30px;top:11%;--tool-x:-125%;--tool-y:-95%;--tool-start:-65deg;--tool-angle:18deg;--tool-delay:0ms;}
+.instrument-cartridge{width:clamp(130px,15vw,210px);right:1%;top:8%;--tool-x:145%;--tool-y:-110%;--tool-start:70deg;--tool-angle:-33deg;--tool-delay:130ms;}
+.instrument-bottle{width:clamp(160px,21vw,280px);left:5%;bottom:-18px;--tool-x:-150%;--tool-y:100%;--tool-start:-75deg;--tool-angle:20deg;--tool-delay:220ms;}
+.instrument-pen{width:clamp(110px,13vw,180px);right:8%;bottom:-50px;--tool-x:180%;--tool-y:100%;--tool-start:80deg;--tool-angle:35deg;--tool-delay:320ms;}
+.instrument-orbit{position:absolute;left:50%;top:50%;width:min(52vw,650px);aspect-ratio:1;border:1px solid #c9b98e12;border-radius:50%;transform:translate(-50%,-50%);animation:orbit-expand 1700ms cubic-bezier(.16,1,.3,1) both;}
+.orbit-two{width:min(62vw,780px);border-style:dashed;animation-delay:150ms;}
+.brand-intro-content{z-index:1;}
+@keyframes instrument-arrive{0%{opacity:0;transform:translate(var(--tool-x),var(--tool-y)) rotate(var(--tool-start)) scale(.7)}55%{opacity:1;transform:translate(0,0) rotate(calc(var(--tool-angle) - 5deg)) scale(1.03)}78%{opacity:1;transform:translate(0,-9px) rotate(calc(var(--tool-angle) + 2deg)) scale(1)}100%{opacity:1;transform:translate(0,0) rotate(var(--tool-angle)) scale(1)}}
+@keyframes orbit-expand{from{opacity:0;transform:translate(-50%,-50%) scale(.5) rotate(-35deg)}to{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}}
+@media(max-width:600px){.instrument-coil{width:165px;left:-25px;top:12%;}.instrument-cartridge{width:90px;right:0;top:13%;}.instrument-bottle{width:150px;left:-12px;bottom:3%;}.instrument-pen{width:97px;right:1%;bottom:-12px;}.instrument-orbit{width:80vw;}.orbit-two{width:105vw;}}
+@media(prefers-reduced-motion:reduce){.tattoo-instruments{display:none;}}
