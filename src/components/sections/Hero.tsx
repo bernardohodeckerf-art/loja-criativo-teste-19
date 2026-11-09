@@ -19,7 +19,7 @@ export function Hero({ book }: { book: () => void }) {
     return () => motion.removeEventListener("change", update);
   }, []);
   return (
-    <section className="hero" aria-label="Good Vibe Tattoo Club">
+    <section id="abertura" className="hero" aria-label="Good Vibe Tattoo Club">
       {site.hero && (
         <img
           className="hero-media"

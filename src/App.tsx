@@ -9,6 +9,7 @@ import {
   videos,
   works,
 } from "@/data/site";
+import { InkIntro } from "@/components/sections/InkIntro";
 import { Hero } from "@/components/sections/Hero";
 import { Portfolio } from "@/components/sections/Portfolio";
 import {
@@ -80,6 +81,7 @@ export default function App() {
         </Modal>
       )}
       <main id="conteudo">
+        <InkIntro />
         <Hero book={() => book()} />
         <div className="style-ribbon" aria-label="Estilos e serviços">
           {[...styles, "Piercing", "Remoção a laser"].map((label) => (

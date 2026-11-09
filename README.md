@@ -56,3 +56,9 @@ Instalação reproduzível com `npm ci` e build TypeScript/Vite. Verificações 
 Validação nesta instância: Chromium em 360, 390, 768, 1024 e 1440 px sem overflow horizontal; fluxos de tatuagem, piercing e remoção, retorno sem perda de respostas, URL/mensagem WhatsApp interceptada sem envio, menu mobile, Escape, retorno de foco e movimento reduzido passaram sem erros JavaScript. Inspeção visual por capturas desktop/mobile. Não equivale a validação com dispositivos físicos ou mídias reais.
 
 Na revisão visual, passaram também: carregamento de todas as fotografias locais, filtros da galeria (Traço fino / Todos), navegação do lightbox e retorno de foco, pausa do slider e reprodução do MP4 real (53,84 segundos, 720×1280). Largura adicional de 720 px verificada. Os outros vídeos não foram convertidos de miniaturas em supostos players.
+
+## Intro de tinta
+
+`src/components/sections/InkIntro.tsx` abre o site com flash tattoo vetorial (rosa e adaga) e tinta preta descendo conforme o scroll. A seção usa `position: sticky`, rolagem nativa e um único listener passivo com `requestAnimationFrame`; não captura wheel/touch nem bloqueia teclado. `--ink-scale` controla a cobertura (progresso × 1,8). A altura é 180svh no desktop e 165svh no celular, ajustável em `src/styles.css`. O contraste muda com `mix-blend-mode: difference`. O link “Ir direto ao site” leva à hero `#abertura`. Com movimento reduzido, a intro é estática, sem percurso extra de rolagem. Listeners e RAF são limpos ao desmontar.
+
+Validação da intro: larguras 360/390/768/1024/1440 px, progresso de tinta por scroll, ausência de overflow, link de pular e movimento reduzido. Os três fluxos de orçamento, Escape, retorno de foco e menu mobile continuam validados. A nova foto de Franja identificada no chat em 09/11/2026 ainda não está disponível como arquivo local e não foi substituída por uma fotografia diferente.
