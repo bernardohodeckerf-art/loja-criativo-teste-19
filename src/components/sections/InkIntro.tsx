@@ -14,7 +14,7 @@ export function InkIntro() {
       const distance = Math.max(1, element.offsetHeight - innerHeight);
       const progress = motion.matches ? 0 : Math.min(1, Math.max(0, -bounds.top / distance));
       element.style.setProperty("--ink-scale", String(progress * 1.8));
-      document.documentElement.toggleAttribute("data-ink-opening", bounds.bottom > 82 && bounds.top < innerHeight);
+      document.documentElement.toggleAttribute("data-ink-active", bounds.bottom > 82 && bounds.top < innerHeight);
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(draw); };
     draw();
@@ -26,7 +26,7 @@ export function InkIntro() {
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
       motion.removeEventListener("change", schedule);
-      document.documentElement.removeAttribute("data-ink-opening");
+      document.documentElement.removeAttribute("data-ink-active");
     };
   }, []);
   return <section ref={root} className="ink-intro" aria-label="Arte com atitude e alma">
@@ -45,7 +45,7 @@ export function InkIntro() {
             <g stroke="currentColor" strokeWidth="2.2" strokeLinejoin="round"><path d="M120 137c-39 14-65-21-48-47-9-35 24-58 49-39 30-21 64 6 54 36 23 24 2 62-34 54-13 15-31 11-38-5M121 65c-29-9-45 23-20 37 8 25 40 23 47 2 24-17 4-44-16-32-14-8-29 4-21 19 14-7 29 8 19 21M72 90l29 12m47 2 27-17m-54-36 11 21m-29 64 17-22M121 150q-10 69 7 137M120 192q-45-61-78-30 9 50 79 59m-4-25-58-25m64 65q39-59 74-32-4 46-72 59m55-48-55 31M153 161l8 4-9 12M102 244l-9 4 12 9M29 79l4 12 12 4-12 4-4 12-4-12-12-4 12-4M198 111v24m-12-12h24"/></g>
           </svg>
         </div>
-        <div className="ink-bottom"><span className="ink-scroll"><ArrowDown size={17}/> ROLE PARA DEIXAR SUA MARCA</span><a href="#abertura">Ir direto ao site <ArrowUpRight size={15}/></a></div>
+        <div className="ink-bottom"><span className="ink-scroll"><ArrowDown size={17}/> ROLE PARA DEIXAR SUA MARCA</span><a href="#trabalhos">Ver trabalhos <ArrowUpRight size={15}/></a></div>
       </div>
     </div>
   </section>;

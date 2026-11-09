@@ -1503,7 +1503,7 @@ footer {
 }
 
 /* Flash tattoo editorial e tinta vinculada à rolagem natural. */
-html[data-ink-opening] header {background:#080808;}
+html[data-ink-active] header {background:#080808;}
 .ink-intro {height:180svh;position:relative;--ink-scale:0;background:#e8e4da;color:#fff;}
 .ink-stage {position:sticky;top:0;height:100svh;min-height:620px;overflow:clip;background:#e8e4da;isolation:isolate;}
 .ink-stage::before {content:"";position:absolute;inset:0;pointer-events:none;opacity:.15;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 140 140' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.6' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23000' filter='url(%23g)' d='M0 0h140v140H0z'/%3E%3C/svg%3E");}
@@ -1527,3 +1527,15 @@ html[data-ink-opening] header {background:#080808;}
 /* Conter os 28px das entradas laterais sem criar um contêiner de rolagem. */
 .artists-section, .services {overflow-x:clip;}
 #abertura {scroll-margin-top:0;}
+
+/* Abertura curta sobre a foto; não captura cliques nem bloqueia navegação. */
+.brand-intro{position:absolute;inset:0;background:#080808;z-index:5;display:grid;place-items:center;pointer-events:none;animation:brand-intro-out 700ms cubic-bezier(.22,1,.36,1) 1000ms forwards;}
+.brand-intro-content{text-align:center;color:#e9e7e0;padding:25px;}
+.brand-intro-content>svg{width:160px;margin:0 auto 30px;}
+.brand-intro-content>p{font-size:clamp(40px,7vw,90px);font-weight:800;letter-spacing:-.06em;line-height:1;}
+.brand-intro-content>p>span{display:block;font-size:clamp(9px,1.3vw,15px);letter-spacing:.5em;font-weight:400;margin-top:16px;}
+.brand-intro-motto{display:block;font-size:8px;letter-spacing:.2em;margin-top:35px;}
+.brand-intro-line{height:1px;background:#e9e7e0;margin:28px auto 0;width:100px;transform-origin:left;animation:brand-line-in 1000ms ease-out both;}
+@keyframes brand-line-in{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes brand-intro-out{from{opacity:1;visibility:visible}to{opacity:0;visibility:hidden}}
+@media(prefers-reduced-motion:reduce){.brand-intro{display:none;}}

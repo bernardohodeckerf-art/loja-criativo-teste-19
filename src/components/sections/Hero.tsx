@@ -66,6 +66,14 @@ export function Hero({ book }: { book: () => void }) {
           </button>
         </>
       )}
+      <div className="brand-intro" aria-hidden="true">
+        <div className="brand-intro-content">
+          <svg viewBox="0 0 200 40" fill="none"><path d="M12 20h57m62 0h57M85 20l15-12 15 12-15 12z" stroke="currentColor" strokeWidth="1"/><circle cx="100" cy="20" r="3" fill="currentColor"/></svg>
+          <p>GOOD VIBE<span>TATTOO CLUB</span></p>
+          <span className="brand-intro-motto">ARTE COM ATITUDE E ALMA.</span>
+          <div className="brand-intro-line" />
+        </div>
+      </div>
       <div className="hero-grain" />
       <div className="hero-topline">
         <span>TATTOO • PIERCING • BLUMENAU</span>

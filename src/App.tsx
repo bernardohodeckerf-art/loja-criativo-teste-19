@@ -81,7 +81,6 @@ export default function App() {
         </Modal>
       )}
       <main id="conteudo">
-        <InkIntro />
         <Hero book={() => book()} />
         <div className="style-ribbon" aria-label="Estilos e serviços">
           {[...styles, "Piercing", "Remoção a laser"].map((label) => (
@@ -112,6 +111,7 @@ export default function App() {
             </a>
           </div>
         </section>
+        <InkIntro />
         <ImageAutoSlider images={works} />
         <Portfolio />
         <section id="estilos" className="section styles-section">
