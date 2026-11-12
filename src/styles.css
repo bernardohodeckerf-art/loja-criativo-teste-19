@@ -1167,6 +1167,15 @@ header.scrolled {
   font-size: 21px;
   letter-spacing: -0.03em;
 }
+@media (min-width: 901px) {
+  .hero {
+    min-height: max(860px, min(75vw, 1100px));
+  }
+  .hero-media {
+    object-fit: cover;
+    object-position: center 8%;
+  }
+}
 .hairline {
   display: block;
   width: 38px;
