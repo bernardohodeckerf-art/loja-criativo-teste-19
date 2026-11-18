@@ -21,6 +21,7 @@ export const artistProfiles: Record<string, ArtistProfile> = {
     role: "Tatuador",
     experience: "Tatuador desde 2018",
     works: doniWorks,
+    portrait: { src: "/media/doni-retrato.webp", alt: "Retrato de Doni", width: 900, height: 1600 },
     specialties: "Lettering, Blackwork, Fine Line e projetos sob medida.",
     biography: [
       "Me chamo Doni, tatuador desde 2018 e meus trabalhos giram em torno de Lettering, Blackwork, Fineline e projetos sob medida. Meu foco é criar tatuagens com identidade, bom acabamento e feitas com calma para entregar meu melhor.",

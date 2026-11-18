@@ -21,3 +21,4 @@ Não foram recuperados os arquivos dos retratos de Moreira e Franja apresentados
 - `doni-trabalho-*.webp`: seis fotos HEIC com autoria de Doni confirmada pelo usuário.
 - `ana-bomsenhor-retrato.webp`: retrato de Ana Bomsenhor enviado e identificado pelo usuário.
 - `ana-cicatriz-sobrancelha.webp` e `ana-comparacao-pele.webp`: comparações do ZIP IMG_1380, indicadas pelo usuário para a seção de tatuagem paramédica.
+- `doni-retrato.webp`: retrato de Doni enviado e identificado pelo usuário, com as barras da captura removidas.

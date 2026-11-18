@@ -2042,9 +2042,36 @@ html[data-ink-active] header {background:#080808;}
     min-height: 0;
   }
 
+  .section {
+    padding-inline: max(6.2%, calc((100% - 1440px) / 2));
+  }
+
+  .artist-gallery .work:nth-child(3n + 2) {
+    margin-top: 0;
+  }
+}
+
+@media (min-width: 901px) and (min-aspect-ratio: 5/4) {
+  .hero::before {
+    filter: blur(32px) brightness(.5);
+  }
+
   .hero .hero-media {
-    object-fit: cover;
-    object-position: center 47%;
+    object-fit: contain;
+    object-position: 76% center;
+  }
+
+  .hero::after {
+    background: linear-gradient(90deg, #090909bb, transparent 72%),
+      linear-gradient(0deg, #090909d9, transparent 44%, #09090966);
+  }
+
+  .hero .hero-content {
+    max-width: 58%;
+  }
+
+  .hero .hero-content h1 {
+    font-size: clamp(3.5rem, 7vw, 7rem);
   }
 }
 
