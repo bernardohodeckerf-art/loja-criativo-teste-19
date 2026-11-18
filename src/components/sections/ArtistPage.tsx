@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { SiteHeader } from "@/components/ui/SiteHeader";
 import { Portfolio } from "@/components/sections/Portfolio";
 import type { ArtistProfile } from "@/data/artist-profiles";
 import { site } from "@/data/site";
@@ -16,17 +17,11 @@ export function ArtistPage({ profile, piercing = false }: { profile: ArtistProfi
 
   return (
     <>
-      <a className="skip" href="#conteudo">Pular para o conteúdo</a>
-      <header className="scrolled">
-        <a className="wordmark" href="/" aria-label="Good Vibe início">
-          GOOD VIBE<span>TATTOO CLUB</span>
-        </a>
-        <a className="header-book" href="/#artistas">Nossa equipe <ArrowUpRight size={16} /></a>
-      </header>
+      <SiteHeader />
       <main id="conteudo" className="artist-page">
         <section className="section artist-page-intro">
           <div>
-            <a className="underlined" href={piercing ? "/" : "/#artistas"}>
+            <a className="underlined" href={piercing ? "/" : "/equipe"}>
               <ArrowLeft size={16} /> {piercing ? "Início" : "Nossa equipe"}
             </a>
             <h1>{title}</h1>

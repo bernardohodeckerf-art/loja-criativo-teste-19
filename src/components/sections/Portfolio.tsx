@@ -1,23 +1,28 @@
 import { useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
-import { works as studioWorks, styles, site, type Media } from "@/data/site";
+import { site, type Media } from "@/data/site";
 import { Modal } from "@/components/ui/Modal";
 export function Portfolio({
-  works = studioWorks,
+  works,
   title = "Arte que fica.",
   artist,
 }: {
-  works?: Media[];
+  works: Media[];
   title?: string;
   artist?: { name: string; path: string };
 }) {
   const [filter, setFilter] = useState("Todos");
+  const [author, setAuthor] = useState("");
   const [index, setIndex] = useState<number | null>(null);
   const swipeStart = useRef<number | null>(null);
-  const categories = artist ? [...new Set(works.flatMap((work) => work.style ? [work.style] : []))] : styles;
-  const filtered = works.filter(
-    (m) => filter === "Todos" || m.style === filter,
+  const categories = [...new Set(works.flatMap((work) => work.style ? [work.style] : []))];
+  const authors = [...new Set(works.flatMap((work) => work.author ? [work.author.name] : []))];
+  const filtered = works.filter((work) =>
+    (filter === "Todos" || work.style === filter) &&
+    (!author || work.author?.name === author),
   );
+  const selected = index === null ? undefined : filtered[index];
+  const selectedArtist = selected?.author ?? artist;
   const move = (step: number) => {
     setIndex((current) => current === null ? null : (current + step + filtered.length) % filtered.length);
   };
@@ -30,6 +35,13 @@ export function Portfolio({
         </div>
         {!artist && <p>Cada traço, uma escolha.<br />Cada trabalho, uma história.</p>}
       </div>
+      {authors.length > 1 && <label className="portfolio-author">
+        Artista
+        <select value={author} onChange={(e) => { setAuthor(e.target.value); setFilter("Todos"); }}>
+          <option value="">Todos os artistas</option>
+          {authors.map((name) => <option key={name}>{name}</option>)}
+        </select>
+      </label>}
       {categories.length > 1 && <div className="filters" aria-label="Filtrar trabalhos">
         {["Todos", ...categories].map((s) => (
           <button
@@ -42,7 +54,7 @@ export function Portfolio({
         ))}
       </div>}
       {filtered.length ? (
-        <div className={artist ? "gallery artist-gallery" : "gallery"}>
+        <div key={`${author}:${filter}`} className="gallery artist-gallery">
           {filtered.map((m, i) => (
             <button className="work" key={m.src} onClick={() => setIndex(i)}>
               <img
@@ -55,7 +67,7 @@ export function Portfolio({
                 loading="lazy"
               />
               <span>
-                <span>{m.caption || m.style || "Ver trabalho"}{artist && <small>{m.style} · {artist.name}</small>}</span>
+                <span>{m.caption || m.style || "Ver trabalho"}{(m.author ?? artist) && <small>{m.style} · {(m.author ?? artist)?.name}</small>}</span>
                 <ArrowUpRight size={20} />
               </span>
             </button>
@@ -64,16 +76,14 @@ export function Portfolio({
       ) : (
         <div className="portfolio-invitation">
           <p>
-            Conheça os trabalhos
-            <br />
-            que contam quem somos.
+            Nenhum trabalho nesta combinação de filtros.
           </p>
           <a href={site.instagram} target="_blank" rel="noopener noreferrer">
             Explorar no Instagram <ArrowUpRight size={20} />
           </a>
         </div>
       )}
-      {index !== null && filtered[index] && (
+      {index !== null && selected && (
         <Modal title="Trabalho em destaque" onClose={() => setIndex(null)}>
           <figure
             className="lightbox"
@@ -86,10 +96,10 @@ export function Portfolio({
             }}
             onTouchCancel={() => { swipeStart.current = null; }}
           >
-            <img src={filtered[index].src} alt={filtered[index].alt} />
+            <img src={selected.src} alt={selected.alt} />
             <figcaption>
-              {filtered[index].caption}
-              {artist && <> · {filtered[index].style} · <a href={artist.path}>{artist.name}</a></>}
+              {selected.caption}
+              {selectedArtist && <> · {selected.style} · <a href={selectedArtist.path}>{selectedArtist.name}</a></>}
             </figcaption>
           </figure>
           <div className="lightbox-controls">

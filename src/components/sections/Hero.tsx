@@ -81,7 +81,7 @@ export function Hero() {
       <div className="hero-content">
         <h1>Good Vibe <span>Tattoo Club</span></h1>
         <div className="hero-actions">
-          <a className="button light" href="#trabalhos">
+          <a className="button light" href="/tatuagens">
             Tatuagens <ArrowUpRight size={18} />
           </a>
           <a className="button light" href="/piercings">

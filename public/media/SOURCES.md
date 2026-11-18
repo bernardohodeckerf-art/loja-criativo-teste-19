@@ -16,3 +16,5 @@ Não foram recuperados os arquivos dos retratos de Moreira e Franja apresentados
 - `franja-*.webp`: retrato e 19 fotos de trabalhos do ZIP identificado pelo usuário como material de Franja Tattoo. Uma captura de rede social ficou fora da galeria.
 - `rodrigo-moreira-retrato.webp` e `rodrigo-piercing-*.webp`: retrato e quatro fotos de piercing do ZIP identificado pelo usuário como material de Rodrigo Moreira. Uma versão repetida e a comparação de remoção a laser ficaram fora da galeria de piercings.
 - `nico-trabalho-*.webp`: oito fotos do ZIP identificado pelo usuário como portfólio de Nico.
+- `estudio-11.webp`, `estudio-14.webp` e `estudio-17.webp`: quadros extraídos do vídeo do estúdio fornecido pelo usuário.
+- `rodrigo-remocao-laser.webp`: comparação de remoção do material do Rodrigo, exibida na página de remoção a laser.

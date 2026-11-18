@@ -37,10 +37,13 @@ export function ImageAutoSlider({
                   src={m.src}
                   alt={group ? "" : m.alt}
                   loading="lazy"
-                  width="420"
-                  height="480"
+                  width={m.width ?? 420}
+                  height={m.height ?? 480}
                 />
-                {m.caption && <figcaption>{m.caption}</figcaption>}
+                {(m.caption || m.author) && <figcaption>
+                  {m.caption}
+                  {m.author && <strong>{m.style && `${m.style} · `}{m.author.name}</strong>}
+                </figcaption>}
               </figure>
             ))}
           </div>

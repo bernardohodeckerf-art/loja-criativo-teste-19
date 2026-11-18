@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { anaBomsenhor as ana } from "@/data/ana-bomsenhor";
+import { SiteHeader } from "@/components/ui/SiteHeader";
 import { site } from "@/data/site";
 
-export function AnaBomsenhor() {
+export function AnaBomsenhor({ service }: { service?: "Micropigmentação" | "Tatuagem paramédica" }) {
+  const title = service ?? ana.name;
   useEffect(() => {
-    document.title = `${ana.name} | ${site.name}`;
+    document.title = `${title} | ${site.name}`;
     document.querySelector('meta[name="description"]')?.setAttribute(
       "content",
       "Conheça Ana Bomsenhor, micropigmentadora e tatuadora paramédica na Good Vibe Tattoo Club, em Blumenau.",
@@ -14,23 +16,17 @@ export function AnaBomsenhor() {
     if (section === "micropigmentacao" || section === "tatuagem-paramedica") {
       document.getElementById(section)?.scrollIntoView();
     }
-  }, []);
+  }, [title]);
 
   return (
     <>
-      <a className="skip" href="#conteudo">Pular para o conteúdo</a>
-      <header className="scrolled">
-        <a className="wordmark" href="/" aria-label="Good Vibe início">
-          GOOD VIBE<span>TATTOO CLUB</span>
-        </a>
-        <a className="header-book" href="/#artistas">Nossa equipe <ArrowUpRight size={16} /></a>
-      </header>
+      <SiteHeader />
       <main id="conteudo" className="ana-profile">
         <section className="section ana-profile-intro" aria-labelledby="ana-name">
           <div>
-            <a className="underlined" href="/#artistas"><ArrowLeft size={16} /> Nossa equipe</a>
-            <h1 id="ana-name">{ana.name}</h1>
-            <p className="ana-role">{ana.role}</p>
+            <a className="underlined" href="/equipe"><ArrowLeft size={16} /> Nossa equipe</a>
+            <h1 id="ana-name">{title}</h1>
+            <p className="ana-role">{service ? <a href={ana.path}>{ana.name}</a> : ana.role}</p>
             <p className="eyebrow">{ana.experience} de experiência</p>
           </div>
           <p className="ana-bio">{ana.biography}</p>
@@ -38,11 +34,13 @@ export function AnaBomsenhor() {
         <section className="section ana-specialties" aria-label="Especialidades">
           <article id="micropigmentacao">
             <h2>Micropigmentação</h2>
-            <p>Dermopigmentação, micropigmentação e tratamentos e camuflagem de cicatrizes e estrias.</p>
+            <p>Dermopigmentação e micropigmentação, incluindo tratamentos e camuflagem de cicatrizes e estrias.</p>
+            {service !== "Micropigmentação" && <a className="underlined" href="/micropigmentacao">Conheça o serviço <ArrowUpRight size={16} /></a>}
           </article>
           <article id="tatuagem-paramedica">
             <h2>Tatuagem paramédica</h2>
             <p>Reconstrução e harmonização de aréolas realistas.</p>
+            {service !== "Tatuagem paramédica" && <a className="underlined" href="/tatuagem-paramedica">Conheça o serviço <ArrowUpRight size={16} /></a>}
           </article>
           <a className="button light" href={site.whatsapp} target="_blank" rel="noopener noreferrer">
             Fale com o estúdio <ArrowUpRight size={18} />

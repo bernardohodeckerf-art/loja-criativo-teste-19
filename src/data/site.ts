@@ -6,6 +6,7 @@ export type Media = {
   srcSet?: string;
   width?: number;
   height?: number;
+  author?: { name: string; path: string };
 };
 export const site = {
   name: "Good Vibe Tattoo Club",
@@ -58,9 +59,12 @@ export const works: Media[] = [
   },
 ];
 export const studioPhotos: Media[] = [
+  { src: "/media/estudio-14.webp", alt: "Recepção da Good Vibe com balcão preto e quadros na parede", width: 480, height: 848 },
+  { src: "/media/estudio-11.webp", alt: "Estação de atendimento com cadeira reclinável no estúdio", width: 480, height: 848 },
+  { src: "/media/estudio-17.webp", alt: "Divisória de vidro e cadeira em uma das salas da Good Vibe", width: 480, height: 848 },
   {
     src: "/media/anna-studio.jpg",
-    alt: "Anna tatuando junto à janela no estúdio Good Vibe",
+    alt: "Anna tatuando junto à janela no estúdio Good Vibe", width: 1440, height: 1920,
   },
   {
     src: "/media/nico-studio.jpg",
@@ -74,20 +78,23 @@ export const videos: { src: string; poster: string; title: string }[] = [
     title: "O artista — por dentro da Good Vibe",
   },
 ];
-export const styles = [
-  "Old school",
-  "Geométrico",
-  "Oriental",
-  "Realismo",
-  "Traço fino",
-];
-export const styleDescriptions = [
-  "Personalidade e linguagem tradicional.",
-  "Formas e composições estruturadas.",
-  "Referências e composições da tatuagem oriental.",
-  "Profundidade e riqueza de detalhes.",
-  "Linhas delicadas e desenhos sutis.",
-];
+export const tattooStyles = [
+  ["Realismo", "Retratos, texturas e detalhes com profundidade."],
+  ["Oriental", "Composições inspiradas na tradição da tatuagem oriental."],
+  ["Blackwork", "Composições que exploram o contraste da tinta preta."],
+  ["Fine Line", "Linhas delicadas e desenhos sutis."],
+  ["Lettering", "Letras desenhadas para acompanhar o corpo."],
+  ["Geométrico", "Formas, padrões e composições estruturadas."],
+  ["Pontilhismo", "Pontos que constroem textura, volume e sombra."],
+  ["Floral", "Flores e outros elementos botânicos."],
+  ["Ornamental indiano", "Padrões e detalhes inspirados em ornamentos indianos."],
+  ["Tribal", "Composições de padrões, linhas e áreas preenchidas."],
+  ["Tradicional", "Contornos marcantes e formas da tatuagem tradicional."],
+  ["Reformas e coberturas", "Projetos para renovar ou cobrir uma tatuagem existente."],
+  ["Projetos personalizados", "Desenhos desenvolvidos a partir da sua ideia."],
+] as const;
+export const styles = tattooStyles.map(([name]) => name);
+export const styleDescriptions = tattooStyles.map(([, description]) => description);
 export const artists = [
   {
     id: "old-school",

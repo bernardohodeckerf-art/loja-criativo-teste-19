@@ -1,17 +1,17 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import { ArrowUpRight, Plus, Minus, Menu, Asterisk } from "lucide-react";
+import { ArrowUpRight, Plus, Minus, Asterisk } from "lucide-react";
 import {
   site,
-  artists,
   styles,
   styleDescriptions,
   studioPhotos,
   videos,
-  works,
+  type Media,
 } from "@/data/site";
 import { InkIntro } from "@/components/sections/InkIntro";
-import { artistProfiles } from "@/data/artist-profiles";
-import { anaBomsenhor } from "@/data/ana-bomsenhor";
+import { tattooWorks } from "@/data/tattoo-works";
+import { Team } from "@/components/sections/Team";
+import { SiteHeader } from "@/components/ui/SiteHeader";
 import { Hero } from "@/components/sections/Hero";
 import { Portfolio } from "@/components/sections/Portfolio";
 import {
@@ -22,16 +22,20 @@ import { Modal } from "@/components/ui/Modal";
 import { ImageAutoSlider } from "@/components/ui/image-auto-slider";
 import { useReveal } from "@/hooks/useReveal";
 const Jewel = lazy(() => import("@/components/ui/Jewel"));
-const links = [
-  ["Trabalhos", "trabalhos"],
-  ["Estilos", "estilos"],
-  ["Artistas", "artistas"],
-  ["Estúdio", "estudio"],
-  ["Contato", "contato"],
-];
-export default function App() {
+const pageTitles = {
+  tatuagens: "Tatuagens",
+  equipe: "Nossa equipe",
+  estudio: "Conheça nosso estúdio",
+  contato: "Contato",
+  "remocao-a-laser": "Remoção de tatuagem a laser",
+};
+
+export type SitePage = keyof typeof pageTitles;
+
+export default function App({ page }: { page?: SitePage }) {
+  const home = !page;
   const [booking, setBooking] = useState<Booking | null>(null);
-  const [menu, setMenu] = useState(false);
+  const [studioPhoto, setStudioPhoto] = useState<Media | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const [style, setStyle] = useState<number | null>(0);
   useReveal();
@@ -41,48 +45,23 @@ export default function App() {
     window.addEventListener("scroll", scroll, { passive: true });
     return () => window.removeEventListener("scroll", scroll);
   }, []);
+  useEffect(() => {
+    if (page) {
+      document.title = `${pageTitles[page]} | ${site.name}`;
+      document.querySelector('meta[name="description"]')?.setAttribute(
+        "content", `${pageTitles[page]} na Good Vibe Tattoo Club, em Blumenau.`,
+      );
+    }
+    document.getElementById(location.hash.slice(1))?.scrollIntoView();
+  }, [page]);
+
   const book = (b: Booking = {}) => setBooking(b);
   return (
     <>
-      <a className="skip" href="#conteudo">
-        Pular para o conteúdo
-      </a>
-      <header className={scrolled ? "scrolled" : ""}>
-        <a className="wordmark" href="#" aria-label="Good Vibe início">
-          GOOD VIBE<span>TATTOO CLUB</span>
-        </a>
-        <nav className="desktop-nav" aria-label="Principal">
-          {links.map(([label, id]) => (
-            <a key={id} href={`#${id}`}>
-              {label}
-            </a>
-          ))}
-        </nav>
-        <button className="header-book" onClick={() => book()}>
-          Agendar <ArrowUpRight size={16} />
-        </button>
-        <button
-          className="icon menu-toggle"
-          aria-label="Abrir menu"
-          aria-expanded={menu}
-          onClick={() => setMenu(true)}
-        >
-          <Menu />
-        </button>
-      </header>
-      {menu && (
-        <Modal title="Navegação" onClose={() => setMenu(false)}>
-          <nav className="mobile-nav">
-            {links.map(([label, id]) => (
-              <a key={id} href={`#${id}`} onClick={() => setMenu(false)}>
-                {label}
-                <ArrowUpRight />
-              </a>
-            ))}
-          </nav>
-        </Modal>
-      )}
-      <main id="conteudo">
+      <SiteHeader solid={!home || scrolled} book={() => book()} />
+      <main id="conteudo" className={home ? undefined : "content-page"}>
+        {page && <div className="section page-title"><h1>{pageTitles[page]}</h1></div>}
+        {home && <>
         <Hero />
         <div className="style-ribbon" aria-label="Estilos e serviços">
           {[...styles, "Piercing", "Remoção a laser"].map((label) => (
@@ -114,8 +93,10 @@ export default function App() {
           </div>
         </section>
         <InkIntro />
-        <ImageAutoSlider images={works} />
-        <Portfolio />
+        <ImageAutoSlider images={tattooWorks} speed={tattooWorks.length * 6} />
+        </>}
+        {(home || page === "tatuagens") && <>
+        <Portfolio works={tattooWorks} title="Galeria de tatuagens" />
         <section id="estilos" className="section styles-section">
           <div className="section-heading">
             <div>
@@ -140,7 +121,7 @@ export default function App() {
                   aria-controls={`style-${i}`}
                   onClick={() => setStyle(style === i ? null : i)}
                 >
-                  <span className="number">0{i + 1}</span>
+                  <span className="number">{String(i + 1).padStart(2, "0")}</span>
                   <span>{s}</span>
                   {style === i ? <Minus /> : <Plus />}
                 </button>
@@ -157,59 +138,9 @@ export default function App() {
             ))}
           </div>
         </section>
-        <section id="artistas" className="section artists-section">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">03 / QUEM CRIA</p>
-              <h2 data-reveal="fade">
-                Diferentes traços.
-                <br />A mesma essência.
-              </h2>
-            </div>
-            <p>
-              Pessoas, ideias e arte.
-              <br />
-              Conheça alguns dos nossos artistas.
-            </p>
-          </div>
-          <div className="artists">
-            {artists.map((a, i) => (
-              <article key={a.id}>
-                {artistProfiles[a.id]?.portrait && (
-                  <img
-                    data-reveal="slide"
-                    data-direction={i % 2 ? "right" : "left"}
-                    src={artistProfiles[a.id].portrait?.src}
-                    alt={artistProfiles[a.id].portrait?.alt}
-                    width="600"
-                    height="750"
-                    loading="lazy"
-                  />
-                )}
-                <div className="artist-info">
-                  <span className="number">0{i + 1}</span>
-                  <div>
-                    <h3><a href={artistProfiles[a.id]?.path}>{artistProfiles[a.id]?.name ?? a.name}</a></h3>
-                    {a.name && <p>{a.specialty}</p>}
-                    <p>{a.description}</p>
-                  </div>
-                  <a className="icon" href={artistProfiles[a.id]?.path} aria-label={`Conheça ${artistProfiles[a.id]?.name ?? a.name}`}>
-                    <ArrowUpRight />
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
-          <article className="ana-team-feature">
-            <div>
-              <h3>{anaBomsenhor.name}</h3>
-              <p>{anaBomsenhor.role} · {anaBomsenhor.experience} de experiência</p>
-            </div>
-            <a className="underlined" href={anaBomsenhor.path}>
-              Conheça Ana Bomsenhor <ArrowUpRight size={18} />
-            </a>
-          </article>
-        </section>
+        </>}
+        {(home || page === "equipe") && <Team showHeading={home} />}
+        {home && <>
         <section className="services section">
           <div id="piercing" className="piercing">
             <p className="eyebrow">04 / ALÉM DO TRAÇO</p>
@@ -253,21 +184,33 @@ export default function App() {
             >
               Solicitar avaliação <ArrowUpRight size={18} />
             </button>
+            <a className="underlined" href="/remocao-a-laser">Conheça a remoção a laser <ArrowUpRight size={16} /></a>
             <p className="secondary-service">
               Conheça nossos serviços de{" "}
-              <a href={`${anaBomsenhor.path}#micropigmentacao`}>micropigmentação</a>
+              <a href="/micropigmentacao">micropigmentação</a>
               {" e "}
-              <a href={`${anaBomsenhor.path}#tatuagem-paramedica`}>tatuagem paramédica</a>.
+              <a href="/tatuagem-paramedica">tatuagem paramédica</a>.
             </p>
           </div>
         </section>
-        <section id="estudio" className="section studio">
+        </>}
+        {page === "remocao-a-laser" && <section className="section laser-service">
+          <div>
+            <h2>Rodrigo Moreira</h2>
+            <p>Especialista em remoção de tatuagens a laser, com 18 anos de experiência no serviço.</p>
+            <a className="underlined" href="/equipe/rodrigo-moreira">Conheça Rodrigo Moreira <ArrowUpRight size={16} /></a>
+            <button className="button light" onClick={() => book({ service: "Remoção a laser" })}>Solicitar avaliação <ArrowUpRight size={16} /></button>
+          </div>
+          <figure>
+            <img src="/media/rodrigo-remocao-laser.webp" alt="Comparação de uma tatuagem em duas etapas da remoção a laser" width="1290" height="1269" loading="lazy" />
+            <figcaption>Remoção a laser · Rodrigo Moreira</figcaption>
+          </figure>
+        </section>}
+        {(home || page === "estudio") && <section id="estudio" className="section studio">
           <p className="eyebrow">05 / NOSSO LUGAR</p>
           <div className="section-heading">
             <h2 data-reveal="fade">
-              Aqui, você
-              <br />
-              pode ser você.
+              Conheça nosso estúdio
             </h2>
             <div>
               <p>
@@ -278,17 +221,14 @@ export default function App() {
               <p className="studio-signature">Arte com atitude e alma.</p>
             </div>
           </div>
-          {studioPhotos.map((m) => (
-            <img
-              className="studio-photo"
-              key={m.src}
-              src={m.src}
-              alt={m.alt}
-              width="1440"
-              height="900"
-              loading="lazy"
-            />
-          ))}
+          <div className="studio-editorial">
+            {studioPhotos.map((m) => (
+              <button type="button" className="studio-frame" key={m.src} onClick={() => setStudioPhoto(m)}
+                aria-label={`Ampliar: ${m.alt}`} data-reveal="fade">
+                <img className="studio-photo" src={m.src} alt={m.alt} width={m.width ?? 1440} height={m.height ?? 1920} loading="lazy" />
+              </button>
+            ))}
+          </div>
           {videos.length > 0 && (
             <div className="backstage">
               <h3>Por dentro da Good Vibe</h3>
@@ -311,8 +251,8 @@ export default function App() {
               ))}
             </div>
           )}
-        </section>
-        <section id="contato" className="contact section">
+        </section>}
+        {(home || page === "contato") && <section id="contato" className="contact section">
           <p className="eyebrow">06 / SEU PRÓXIMO CAPÍTULO</p>
           <h2 data-reveal="fade">
             Bora tirar a ideia
@@ -335,15 +275,18 @@ export default function App() {
               @goodvibetattooclub <ArrowUpRight size={16} />
             </a>
           </div>
-        </section>
+        </section>}
       </main>
       <footer>
-        <a className="wordmark" href="#">
+        <a className="wordmark" href="/">
           GOOD VIBE<span>TATTOO CLUB</span>
         </a>
         <p>Arte com atitude e alma. Desde 2009.</p>
         <span>© {new Date().getFullYear()} Good Vibe Tattoo Club</span>
       </footer>
+      {studioPhoto && <Modal title={studioPhoto.alt} onClose={() => setStudioPhoto(null)}>
+        <figure className="lightbox"><img src={studioPhoto.src} alt={studioPhoto.alt} /></figure>
+      </Modal>}
       {booking && (
         <Modal title="Solicitar orçamento" onClose={() => setBooking(null)}>
           <Questionnaire initial={booking} />
