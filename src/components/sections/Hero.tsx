@@ -1,11 +1,9 @@
-import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { ArrowDown, ArrowUpRight, Pause, Play } from "lucide-react";
+import { useEffect, useState, type CSSProperties } from "react";
+import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { TattooInstruments } from "@/components/ui/TattooInstruments";
 import { site } from "@/data/site";
 
 export function Hero() {
-  const ref = useRef<HTMLVideoElement>(null);
-  const [play, setPlay] = useState(false);
   const [allowed, setAllowed] = useState(false);
   useEffect(() => {
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
@@ -34,33 +32,18 @@ export function Hero() {
         />
       )}
       {site.hero && site.heroVideo && allowed && (
-        <>
-          <video
-            ref={ref}
-            className="hero-media"
-            poster={site.hero.src}
-            src={site.heroVideo}
-            preload="metadata"
-            aria-hidden="true"
-            autoPlay
-            muted
-            loop
-            playsInline
-            onPlay={() => setPlay(true)}
-            onPause={() => setPlay(false)}
-            onError={() => setAllowed(false)}
-          />
-          <button
-            className="video-pause icon"
-            aria-label={play ? "Pausar vídeo" : "Retomar vídeo"}
-            onClick={() => {
-              if (play) ref.current?.pause();
-              else void ref.current?.play().catch(() => setPlay(false));
-            }}
-          >
-            {play ? <Pause /> : <Play />}
-          </button>
-        </>
+        <video
+          className="hero-media"
+          poster={site.hero.src}
+          src={site.heroVideo}
+          preload="metadata"
+          aria-hidden="true"
+          autoPlay
+          muted
+          loop
+          playsInline
+          onError={() => setAllowed(false)}
+        />
       )}
       <div className="brand-intro" aria-hidden="true">
         <TattooInstruments />

@@ -9,16 +9,23 @@ const team: ArtistProfile[] = [
   { ...anaBomsenhor, experience: "Mais de 10 anos de experiência", biography: [anaBomsenhor.biography] },
 ];
 
-export function Team({ showHeading = true }: { showHeading?: boolean }) {
+export function Team({
+  showHeading = true,
+  includeParamedical = true,
+}: {
+  showHeading?: boolean;
+  includeParamedical?: boolean;
+}) {
+  const members = includeParamedical ? team : team.filter((artist) => artist.path !== anaBomsenhor.path);
   return (
     <section id="artistas" className="section artists-section">
       {showHeading && <div className="section-heading"><h2>Nossa equipe</h2></div>}
       <div className="team-list">
-        {team.map((artist) => (
+        {members.map((artist) => (
           <article className="team-member" key={artist.path}>
-            {artist.portrait && <img className="team-portrait" src={artist.portrait.src} alt={artist.portrait.alt}
+            {artist.portrait && <img data-reveal="rise" className="team-portrait" src={artist.portrait.src} alt={artist.portrait.alt}
               width={artist.portrait.width} height={artist.portrait.height} loading="lazy" />}
-            <div className="team-curriculum">
+            <div className="team-curriculum" data-reveal="rise">
               <h3>{artist.name}</h3>
               <p className="eyebrow">{artist.role} · {artist.experience}</p>
               {artist.specialties && <p>{artist.specialties}</p>}

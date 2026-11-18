@@ -1,11 +1,13 @@
 import { useEffect } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { useReveal } from "@/hooks/useReveal";
 import { SiteHeader } from "@/components/ui/SiteHeader";
 import { Portfolio } from "@/components/sections/Portfolio";
 import type { ArtistProfile } from "@/data/artist-profiles";
 import { site } from "@/data/site";
 
 export function ArtistPage({ profile, piercing = false }: { profile: ArtistProfile; piercing?: boolean }) {
+  useReveal();
   const { name, role, portrait } = profile;
   const title = piercing ? "Piercings" : name;
 
@@ -35,7 +37,7 @@ export function ArtistPage({ profile, piercing = false }: { profile: ArtistProfi
           </div>
           {portrait && <img src={portrait.src} alt={portrait.alt} width={portrait.width} height={portrait.height} />}
         </section>
-        <section className="section artist-page-bio" aria-labelledby="artist-bio">
+        <section className="section artist-page-bio" data-reveal="rise" aria-labelledby="artist-bio">
           <h2 id="artist-bio">{piercing ? "Sobre o atendimento" : "Trajetória"}</h2>
           <div>
             {piercing

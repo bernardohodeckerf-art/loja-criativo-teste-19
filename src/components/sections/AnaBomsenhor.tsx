@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
-import { anaBomsenhor as ana } from "@/data/ana-bomsenhor";
+import { anaBomsenhor as ana, paramedicalWorks } from "@/data/ana-bomsenhor";
+import { useReveal } from "@/hooks/useReveal";
+import { Portfolio } from "@/components/sections/Portfolio";
 import { SiteHeader } from "@/components/ui/SiteHeader";
 import { site } from "@/data/site";
 
 export function AnaBomsenhor({ service }: { service?: "Micropigmentação" | "Tatuagem paramédica" }) {
+  useReveal();
   const title = service ?? ana.name;
   useEffect(() => {
     document.title = `${title} | ${site.name}`;
@@ -48,6 +51,8 @@ export function AnaBomsenhor({ service }: { service?: "Micropigmentação" | "Ta
             Fale com o estúdio <ArrowUpRight size={18} />
           </a>
         </section>
+        {service !== "Micropigmentação" &&
+          <Portfolio id="trabalhos-paramedicos" works={paramedicalWorks} title="Trabalhos em tatuagem paramédica" artist={ana} />}
       </main>
     </>
   );

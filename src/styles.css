@@ -269,13 +269,6 @@ h1 span {
 .hero-bottom a {
   padding: 8px;
 }
-.video-pause {
-  position: absolute;
-  bottom: 100px;
-  right: 6%;
-  z-index: 3;
-  background: #1118;
-}
 .intro {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2011,4 +2004,51 @@ html[data-ink-active] header {background:#080808;}
 
 @media (max-width: 700px) {
   .paramedical-feature { grid-template-columns: 1fr; }
+}
+
+[data-reveal="rise"] {
+  transition: opacity 570ms ease-out, translate 650ms cubic-bezier(.22, 1, .36, 1);
+}
+
+.reveal-pending[data-reveal="rise"] {
+  opacity: 0;
+  translate: 0 1.65rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-pending[data-reveal="rise"] { translate: none; }
+}
+
+.scroll-video {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #111;
+}
+
+.scroll-video img,
+.scroll-video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (min-width: 901px) {
+  .hero {
+    width: 100%;
+    height: 100svh;
+    min-height: 0;
+  }
+
+  .hero .hero-media {
+    object-fit: cover;
+    object-position: center 47%;
+  }
+}
+
+.paramedical-feature > #trabalhos-paramedicos {
+  grid-column: 1 / -1;
+  padding: 0;
 }

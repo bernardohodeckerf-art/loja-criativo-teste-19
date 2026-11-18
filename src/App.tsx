@@ -1,17 +1,17 @@
 import { lazy, Suspense, useEffect, useState } from "react";
-import { ArrowUpRight, Plus, Minus, Asterisk } from "lucide-react";
+import { ArrowUpRight, Asterisk } from "lucide-react";
 import {
   site,
   styles,
-  styleDescriptions,
   studioPhotos,
   videos,
   type Media,
 } from "@/data/site";
-import { anaBomsenhor } from "@/data/ana-bomsenhor";
+import { anaBomsenhor, paramedicalWorks } from "@/data/ana-bomsenhor";
 import { InkIntro } from "@/components/sections/InkIntro";
 import { tattooWorks } from "@/data/tattoo-works";
 import { Team } from "@/components/sections/Team";
+import { ScrollVideo } from "@/components/ui/ScrollVideo";
 import { SiteHeader } from "@/components/ui/SiteHeader";
 import { Hero } from "@/components/sections/Hero";
 import { Portfolio } from "@/components/sections/Portfolio";
@@ -38,7 +38,6 @@ export default function App({ page }: { page?: SitePage }) {
   const [booking, setBooking] = useState<Booking | null>(null);
   const [studioPhoto, setStudioPhoto] = useState<Media | null>(null);
   const [scrolled, setScrolled] = useState(false);
-  const [style, setStyle] = useState<number | null>(0);
   useReveal();
   useEffect(() => {
     const scroll = () => setScrolled(scrollY > 35);
@@ -81,7 +80,7 @@ export default function App({ page }: { page?: SitePage }) {
             <br />
             Um jeito de <em>ser.</em>
           </h2>
-          <div className="intro-copy">
+          <div className="intro-copy" data-reveal="rise">
             <span className="small-cross" aria-hidden="true">
               <Asterisk size={42} />
             </span>
@@ -97,58 +96,18 @@ export default function App({ page }: { page?: SitePage }) {
         </section>
         <InkIntro />
         </>}
-        {(home || page === "tatuagens") && <section id="estilos" className="section styles-section">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">02 / SUA EXPRESSÃO</p>
-              <h2 data-reveal="fade">
-                Diferentes estilos.
-                <br />
-                Infinitas histórias.
-              </h2>
-            </div>
-            <p>
-              Encontre a linguagem
-              <br />
-              que conversa com você.
-            </p>
-          </div>
-          <div className="style-list">
-            {styles.map((s, i) => (
-              <div className="style-item" key={s}>
-                <button
-                  aria-expanded={style === i}
-                  aria-controls={`style-${i}`}
-                  onClick={() => setStyle(style === i ? null : i)}
-                >
-                  <span className="number">{String(i + 1).padStart(2, "0")}</span>
-                  <span>{s}</span>
-                  {style === i ? <Minus /> : <Plus />}
-                </button>
-                <div id={`style-${i}`} hidden={style !== i}>
-                  <p>{styleDescriptions[i]}</p>
-                  <button
-                    className="text-button"
-                    onClick={() => book({ service: "Tatuagem", style: s })}
-                  >
-                    Conversar sobre esse estilo <ArrowUpRight size={16} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>}
         {home && <section id="tatuagem-paramedica" className="section paramedical-feature" aria-labelledby="paramedical-title">
           <div>
-            <h2 id="paramedical-title">Tatuagem paramédica</h2>
+            <h2 id="paramedical-title" data-reveal="rise">Tatuagem paramédica</h2>
             <p>Com {anaBomsenhor.name}, tatuadora paramédica e micropigmentadora com mais de 10 anos de experiência em dermopigmentação.</p>
             <p>Reconstrução e harmonização de aréolas realistas e camuflagem de cicatrizes e estrias.</p>
             <a className="button light" href="/tatuagem-paramedica">Conheça o serviço <ArrowUpRight size={16} /></a>
           </div>
-          <img src={anaBomsenhor.portrait.src} alt={anaBomsenhor.portrait.alt}
+          <img data-reveal="slide" data-direction="right" src={anaBomsenhor.portrait.src} alt={anaBomsenhor.portrait.alt}
             width={anaBomsenhor.portrait.width} height={anaBomsenhor.portrait.height} loading="lazy" />
+          <Portfolio id="trabalhos-paramedicos" works={paramedicalWorks} title="Trabalhos em tatuagem paramédica" artist={anaBomsenhor} />
         </section>}
-        {(home || page === "equipe") && <Team showHeading={home} />}
+        {(home || page === "equipe") && <Team showHeading={home} includeParamedical={!home} />}
         {home && <>
         <section className="services section">
           <div id="piercing" className="piercing">
@@ -176,7 +135,7 @@ export default function App({ page }: { page?: SitePage }) {
               <Jewel />
             </Suspense>
           </div>
-          <div className="laser">
+          <div className="laser" data-reveal="rise">
             <span className="service-tag">REMOÇÃO A LASER</span>
             <h2 data-reveal="slide" data-direction="right">
               Novos caminhos
@@ -239,21 +198,7 @@ export default function App({ page }: { page?: SitePage }) {
             <div className="backstage">
               <h3>Por dentro da Good Vibe</h3>
               {videos.map((v) => (
-                <figure key={v.src}>
-                  <video
-                    controls
-                    preload="none"
-                    poster={v.poster}
-                    onPlay={(e) =>
-                      document.querySelectorAll("video").forEach((other) => {
-                        if (other !== e.currentTarget) other.pause();
-                      })
-                    }
-                  >
-                    <source src={v.src} />
-                  </video>
-                  <figcaption>{v.title}</figcaption>
-                </figure>
+                <ScrollVideo key={v.src} {...v} />
               ))}
             </div>
           )}
@@ -268,7 +213,7 @@ export default function App({ page }: { page?: SitePage }) {
           <button className="button light" onClick={() => book()}>
             Vamos criar juntos <ArrowUpRight size={18} />
           </button>
-          <div className="contact-details">
+          <div className="contact-details" data-reveal="rise">
             <a
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address)}`}
               target="_blank"

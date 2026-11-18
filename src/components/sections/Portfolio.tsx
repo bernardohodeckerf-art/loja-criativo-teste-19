@@ -3,10 +3,12 @@ import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { site, type Media } from "@/data/site";
 import { Modal } from "@/components/ui/Modal";
 export function Portfolio({
+  id = "trabalhos",
   works,
   title = "Arte que fica.",
   artist,
 }: {
+  id?: string;
   works: Media[];
   title?: string;
   artist?: { name: string; path: string };
@@ -27,8 +29,8 @@ export function Portfolio({
     setIndex((current) => current === null ? null : (current + step + filtered.length) % filtered.length);
   };
   return (
-    <section id="trabalhos" className="section">
-      <div className="section-heading">
+    <section id={id} className="section">
+      <div className="section-heading" data-reveal="rise">
         <div>
           <p className="eyebrow">01 / NA PELE</p>
           <h2>{title}</h2>
@@ -56,7 +58,7 @@ export function Portfolio({
       {filtered.length ? (
         <div key={`${author}:${filter}`} className="gallery artist-gallery">
           {filtered.map((m, i) => (
-            <button className="work" key={m.src} onClick={() => setIndex(i)}>
+            <button className="work" data-reveal="rise" key={m.src} onClick={() => setIndex(i)}>
               <img
                 src={m.src}
                 srcSet={m.srcSet}

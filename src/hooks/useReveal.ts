@@ -1,49 +1,72 @@
 import { useEffect } from "react";
+
 export function useReveal() {
   useEffect(() => {
-    if (
-      !("IntersectionObserver" in window) ||
-      matchMedia("(prefers-reduced-motion: reduce)").matches
-    )
-      return;
-    let observer: IntersectionObserver | undefined;
-    const nodes = Array.from(
-      document.querySelectorAll<HTMLElement>("[data-reveal]"),
-    );
-    const show = (el: HTMLElement) => {
-      el.classList.remove("reveal-pending");
-      observer?.unobserve(el);
+    const motion = matchMedia("(prefers-reduced-motion: reduce)");
+    if (!("IntersectionObserver" in window)) return;
+
+    const pending = new Set<HTMLElement>();
+    const observed = new WeakSet<HTMLElement>();
+    const show = (element: HTMLElement) => {
+      element.classList.remove("reveal-pending");
+      observer.unobserve(element);
+      pending.delete(element);
     };
-    const focus = (e: FocusEvent) => {
-      nodes.forEach((el) => {
-        if (el.contains(e.target as Node)) show(el);
-      });
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) show(entry.target as HTMLElement);
+      }
+    }, { rootMargin: "0px 0px -5% 0px" });
+
+    const watch = (element: HTMLElement) => {
+      if (motion.matches || observed.has(element)) return;
+      observed.add(element);
+      if (element.matches(":focus-within")) return;
+      const { top, bottom } = element.getBoundingClientRect();
+      if (top < innerHeight && bottom > 0) return;
+      pending.add(element);
+      element.classList.add("reveal-pending");
+      observer.observe(element);
     };
-    try {
-      observer = new IntersectionObserver(
-        (entries) =>
-          entries.forEach((e) => {
-            if (e.isIntersecting) show(e.target as HTMLElement);
-          }),
-        { threshold: 0.2 },
-      );
-      nodes.forEach((el) => {
-        if (
-          el.querySelector("button,a,input,select,textarea") ||
-          el.offsetHeight > innerHeight * 0.8
-        )
-          return;
-        observer!.observe(el);
-        el.classList.add("reveal-pending");
-      });
-      document.addEventListener("focusin", focus);
-    } catch {
-      nodes.forEach(show);
-    }
+
+    const scan = (root: ParentNode) => {
+      root.querySelectorAll<HTMLElement>("[data-reveal]").forEach(watch);
+    };
+    const changes = new MutationObserver((records) => {
+      for (const record of records) {
+        for (const node of record.addedNodes) {
+          if (!(node instanceof HTMLElement)) continue;
+          if (node.matches("[data-reveal]")) watch(node);
+          scan(node);
+        }
+      }
+      for (const element of pending) {
+        if (!element.isConnected) show(element);
+      }
+    });
+
+    const revealFocus = (event: FocusEvent) => {
+      let element = event.target instanceof Element ? event.target : null;
+      while (element) {
+        if (element instanceof HTMLElement && pending.has(element)) show(element);
+        element = element.parentElement;
+      }
+    };
+    const updateMotion = () => {
+      if (motion.matches) pending.forEach(show);
+      else scan(document);
+    };
+
+    scan(document);
+    changes.observe(document.body, { childList: true, subtree: true });
+    document.addEventListener("focusin", revealFocus);
+    motion.addEventListener("change", updateMotion);
     return () => {
-      observer?.disconnect();
-      nodes.forEach(show);
-      document.removeEventListener("focusin", focus);
+      changes.disconnect();
+      observer.disconnect();
+      pending.forEach(show);
+      document.removeEventListener("focusin", revealFocus);
+      motion.removeEventListener("change", updateMotion);
     };
   }, []);
 }

@@ -20,3 +20,4 @@ Não foram recuperados os arquivos dos retratos de Moreira e Franja apresentados
 - `rodrigo-remocao-laser.webp`: comparação de remoção do material do Rodrigo, exibida na página de remoção a laser.
 - `doni-trabalho-*.webp`: seis fotos HEIC com autoria de Doni confirmada pelo usuário.
 - `ana-bomsenhor-retrato.webp`: retrato de Ana Bomsenhor enviado e identificado pelo usuário.
+- `ana-cicatriz-sobrancelha.webp` e `ana-comparacao-pele.webp`: comparações do ZIP IMG_1380, indicadas pelo usuário para a seção de tatuagem paramédica.
