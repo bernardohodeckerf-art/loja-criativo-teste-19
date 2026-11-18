@@ -8,6 +8,7 @@ const links = [
   ["Tatuagens", "/tatuagens"],
   ["Piercings", "/piercings"],
   ["Micropigmentação", "/micropigmentacao"],
+  ["Tatuagem Paramédica", "/tatuagem-paramedica"],
   ["Remoção a Laser", "/remocao-a-laser"],
   ["Nossa Equipe", "/equipe"],
   ["O Estúdio", "/estudio"],

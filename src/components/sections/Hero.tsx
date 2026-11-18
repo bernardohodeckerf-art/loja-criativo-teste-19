@@ -93,7 +93,7 @@ export function Hero() {
         <a className="hero-studio-link" href="#estudio">
           <span className="hairline" /> Conheça o estúdio
         </a>
-        <a className="hero-scroll" href="#essencia" aria-label="Rolar para a apresentação do estúdio">
+        <a className="hero-scroll" href="#trabalhos" aria-label="Rolar para a galeria de tatuagens">
           <ArrowDown size={20} />
         </a>
         <span>BLUMENAU — SC, BRASIL</span>

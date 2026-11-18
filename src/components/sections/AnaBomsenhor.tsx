@@ -34,16 +34,16 @@ export function AnaBomsenhor({ service }: { service?: "Micropigmentação" | "Ta
           <p className="ana-bio">{ana.biography}</p>
         </section>
         <section className="section ana-specialties" aria-label="Especialidades">
-          <article id="micropigmentacao">
+          {service !== "Tatuagem paramédica" && <article id="micropigmentacao">
             <h2>Micropigmentação</h2>
             <p>Dermopigmentação e micropigmentação, incluindo tratamentos e camuflagem de cicatrizes e estrias.</p>
             {service !== "Micropigmentação" && <a className="underlined" href="/micropigmentacao">Conheça o serviço <ArrowUpRight size={16} /></a>}
-          </article>
-          <article id="tatuagem-paramedica">
+          </article>}
+          {service !== "Micropigmentação" && <article id="tatuagem-paramedica">
             <h2>Tatuagem paramédica</h2>
-            <p>Reconstrução e harmonização de aréolas realistas.</p>
+            <p>Reconstrução e harmonização de aréolas realistas e camuflagem de cicatrizes e estrias.</p>
             {service !== "Tatuagem paramédica" && <a className="underlined" href="/tatuagem-paramedica">Conheça o serviço <ArrowUpRight size={16} /></a>}
-          </article>
+          </article>}
           <a className="button light" href={site.whatsapp} target="_blank" rel="noopener noreferrer">
             Fale com o estúdio <ArrowUpRight size={18} />
           </a>

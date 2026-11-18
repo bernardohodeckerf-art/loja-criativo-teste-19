@@ -1913,7 +1913,7 @@ html[data-ink-active] header {background:#080808;}
   margin-top: 1rem;
 }
 
-@media (max-width: 1120px) {
+@media (max-width: 1250px) {
   .desktop-nav { display: none; }
   .menu-toggle { display: inline-flex; }
   .header-book { margin-left: auto; }
@@ -1976,4 +1976,39 @@ html[data-ink-active] header {background:#080808;}
   .ana-profile-intro .ana-bio {
     grid-column: auto;
   }
+}
+
+#trabalhos,
+#tatuagem-paramedica {
+  scroll-margin-top: 5rem;
+}
+
+.paramedical-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, .7fr);
+  align-items: center;
+  gap: clamp(1.5rem, 6vw, 6rem);
+  background: #171310;
+}
+
+.paramedical-feature h2 {
+  font-size: clamp(2.25rem, 5vw, 5rem);
+  line-height: 1;
+}
+
+.paramedical-feature p {
+  max-width: 44ch;
+  margin-block: 1rem;
+}
+
+.paramedical-feature img {
+  display: block;
+  width: 100%;
+  max-height: 32rem;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 700px) {
+  .paramedical-feature { grid-template-columns: 1fr; }
 }

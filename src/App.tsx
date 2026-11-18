@@ -8,6 +8,7 @@ import {
   videos,
   type Media,
 } from "@/data/site";
+import { anaBomsenhor } from "@/data/ana-bomsenhor";
 import { InkIntro } from "@/components/sections/InkIntro";
 import { tattooWorks } from "@/data/tattoo-works";
 import { Team } from "@/components/sections/Team";
@@ -61,8 +62,10 @@ export default function App({ page }: { page?: SitePage }) {
       <SiteHeader solid={!home || scrolled} book={() => book()} />
       <main id="conteudo" className={home ? undefined : "content-page"}>
         {page && <div className="section page-title"><h1>{pageTitles[page]}</h1></div>}
+        {home && <Hero />}
+        {(home || page === "tatuagens") && <Portfolio works={tattooWorks} title="Galeria de tatuagens" />}
         {home && <>
-        <Hero />
+        <ImageAutoSlider images={tattooWorks} speed={tattooWorks.length * 6} />
         <div className="style-ribbon" aria-label="Estilos e serviços">
           {[...styles, "Piercing", "Remoção a laser"].map((label) => (
             <span key={label}>
@@ -93,11 +96,8 @@ export default function App({ page }: { page?: SitePage }) {
           </div>
         </section>
         <InkIntro />
-        <ImageAutoSlider images={tattooWorks} speed={tattooWorks.length * 6} />
         </>}
-        {(home || page === "tatuagens") && <>
-        <Portfolio works={tattooWorks} title="Galeria de tatuagens" />
-        <section id="estilos" className="section styles-section">
+        {(home || page === "tatuagens") && <section id="estilos" className="section styles-section">
           <div className="section-heading">
             <div>
               <p className="eyebrow">02 / SUA EXPRESSÃO</p>
@@ -137,8 +137,17 @@ export default function App({ page }: { page?: SitePage }) {
               </div>
             ))}
           </div>
-        </section>
-        </>}
+        </section>}
+        {home && <section id="tatuagem-paramedica" className="section paramedical-feature" aria-labelledby="paramedical-title">
+          <div>
+            <h2 id="paramedical-title">Tatuagem paramédica</h2>
+            <p>Com {anaBomsenhor.name}, tatuadora paramédica e micropigmentadora com mais de 10 anos de experiência em dermopigmentação.</p>
+            <p>Reconstrução e harmonização de aréolas realistas e camuflagem de cicatrizes e estrias.</p>
+            <a className="button light" href="/tatuagem-paramedica">Conheça o serviço <ArrowUpRight size={16} /></a>
+          </div>
+          <img src={anaBomsenhor.portrait.src} alt={anaBomsenhor.portrait.alt}
+            width={anaBomsenhor.portrait.width} height={anaBomsenhor.portrait.height} loading="lazy" />
+        </section>}
         {(home || page === "equipe") && <Team showHeading={home} />}
         {home && <>
         <section className="services section">
@@ -186,10 +195,7 @@ export default function App({ page }: { page?: SitePage }) {
             </button>
             <a className="underlined" href="/remocao-a-laser">Conheça a remoção a laser <ArrowUpRight size={16} /></a>
             <p className="secondary-service">
-              Conheça nossos serviços de{" "}
-              <a href="/micropigmentacao">micropigmentação</a>
-              {" e "}
-              <a href="/tatuagem-paramedica">tatuagem paramédica</a>.
+              Conheça também o serviço de <a href="/micropigmentacao">micropigmentação</a>.
             </p>
           </div>
         </section>
