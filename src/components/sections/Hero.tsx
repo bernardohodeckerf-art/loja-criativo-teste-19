@@ -3,7 +3,7 @@ import { ArrowDown, ArrowUpRight, Pause, Play } from "lucide-react";
 import { TattooInstruments } from "@/components/ui/TattooInstruments";
 import { site } from "@/data/site";
 
-export function Hero({ book }: { book: () => void }) {
+export function Hero() {
   const ref = useRef<HTMLVideoElement>(null);
   const [play, setPlay] = useState(false);
   const [allowed, setAllowed] = useState(false);
@@ -28,8 +28,8 @@ export function Hero({ book }: { book: () => void }) {
           srcSet={site.hero.srcSet}
           sizes="100vw"
           alt={site.hero.alt}
-          width="1290"
-          height="1720"
+          width="480"
+          height="848"
           fetchPriority="high"
         />
       )}
@@ -39,28 +39,23 @@ export function Hero({ book }: { book: () => void }) {
             ref={ref}
             className="hero-media"
             poster={site.hero.src}
+            src={site.heroVideo}
+            preload="metadata"
+            aria-hidden="true"
             autoPlay
             muted
             loop
             playsInline
             onPlay={() => setPlay(true)}
+            onPause={() => setPlay(false)}
             onError={() => setAllowed(false)}
-          >
-            <source
-              src={
-                matchMedia("(max-width: 600px)").matches
-                  ? site.heroVideo.mobile || site.heroVideo.desktop
-                  : site.heroVideo.desktop
-              }
-            />
-          </video>
+          />
           <button
             className="video-pause icon"
             aria-label={play ? "Pausar vídeo" : "Retomar vídeo"}
             onClick={() => {
               if (play) ref.current?.pause();
-              else void ref.current?.play();
-              setPlay(!play);
+              else void ref.current?.play().catch(() => setPlay(false));
             }}
           >
             {play ? <Pause /> : <Play />}
@@ -83,28 +78,14 @@ export function Hero({ book }: { book: () => void }) {
         </div>
       </div>
       <div className="hero-grain" />
-      <div className="hero-topline">
-        <span>TATTOO • PIERCING • BLUMENAU</span>
-        <span>EST. 2009</span>
-      </div>
       <div className="hero-content">
-        <p className="eyebrow">GOOD VIBE TATTOO CLUB</p>
-        <h1>
-          Sua história.
-          <br />
-          <span>Na sua pele.</span>
-        </h1>
+        <h1>Good Vibe <span>Tattoo Club</span></h1>
         <div className="hero-actions">
-          <p className="hero-manifesto">
-            ARTE COM
-            <br />
-            ATITUDE E ALMA.
-          </p>
-          <button className="button light" onClick={book}>
-            Criar minha próxima tattoo <ArrowUpRight size={18} />
-          </button>
-          <a className="underlined" href="#trabalhos">
-            Explorar trabalhos <ArrowUpRight size={16} />
+          <a className="button light" href="#trabalhos">
+            Tatuagens <ArrowUpRight size={18} />
+          </a>
+          <a className="button light" href="/piercings">
+            Piercings <ArrowUpRight size={18} />
           </a>
         </div>
       </div>
@@ -112,7 +93,7 @@ export function Hero({ book }: { book: () => void }) {
         <a className="hero-studio-link" href="#estudio">
           <span className="hairline" /> Conheça o estúdio
         </a>
-        <a href="#essencia" aria-label="Conhecer o estúdio">
+        <a className="hero-scroll" href="#essencia" aria-label="Rolar para a apresentação do estúdio">
           <ArrowDown size={20} />
         </a>
         <span>BLUMENAU — SC, BRASIL</span>

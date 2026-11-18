@@ -4,6 +4,8 @@ export type Media = {
   caption?: string;
   style?: string;
   srcSet?: string;
+  width?: number;
+  height?: number;
 };
 export const site = {
   name: "Good Vibe Tattoo Club",
@@ -12,10 +14,10 @@ export const site = {
   instagram: "https://www.instagram.com/goodvibetattooclub/",
   whatsapp: "https://wa.me/554730374901",
   hero: {
-    src: "/media/nico-portfolio-3.jpg",
-    alt: "Nico trabalhando em uma tatuagem na Good Vibe Tattoo Club",
+    src: "/media/estudio-hero.webp",
+    alt: "Interior do estúdio Good Vibe Tattoo Club",
   } as Media | undefined,
-  heroVideo: undefined as { desktop: string; mobile?: string } | undefined,
+  heroVideo: "/media/estudio-hero.mp4",
 };
 // Add only supplied, confirmed media. No stock portraits or inferred attribution.
 export const works: Media[] = [
@@ -115,6 +117,13 @@ export const artists = [
       src: "/media/anna-studio.jpg",
       alt: "Anna tatuando junto à janela",
     } as Media | undefined,
+  },
+  {
+    id: "doni",
+    name: "Doni",
+    specialty: "Lettering, Blackwork, Fine Line e projetos sob medida",
+    description: "Tatuador desde 2018.",
+    photo: undefined as Media | undefined,
   },
   {
     id: "moreira",

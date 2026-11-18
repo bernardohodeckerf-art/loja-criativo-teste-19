@@ -130,7 +130,7 @@ export function Questionnaire({ initial }: { initial: Booking }) {
             {a.service === "Tatuagem" &&
               field("artist", "Profissional de preferência", true, [
                 "Quero uma indicação",
-                ...artists.slice(0, 3).map((x) => x.name || x.specialty),
+                ...artists.filter((artist) => artist.id !== "moreira").map((artist) => artist.name || artist.specialty),
               ])}
             {a.service === "Piercing" && <p>Profissional: Moreira</p>}
           </div>

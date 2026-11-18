@@ -10,6 +10,8 @@ import {
   works,
 } from "@/data/site";
 import { InkIntro } from "@/components/sections/InkIntro";
+import { artistProfiles } from "@/data/artist-profiles";
+import { anaBomsenhor } from "@/data/ana-bomsenhor";
 import { Hero } from "@/components/sections/Hero";
 import { Portfolio } from "@/components/sections/Portfolio";
 import {
@@ -81,7 +83,7 @@ export default function App() {
         </Modal>
       )}
       <main id="conteudo">
-        <Hero book={() => book()} />
+        <Hero />
         <div className="style-ribbon" aria-label="Estilos e serviços">
           {[...styles, "Piercing", "Remoção a laser"].map((label) => (
             <span key={label}>
@@ -173,12 +175,12 @@ export default function App() {
           <div className="artists">
             {artists.map((a, i) => (
               <article key={a.id}>
-                {a.photo && (
+                {artistProfiles[a.id]?.portrait && (
                   <img
                     data-reveal="slide"
                     data-direction={i % 2 ? "right" : "left"}
-                    src={a.photo.src}
-                    alt={a.photo.alt}
+                    src={artistProfiles[a.id].portrait?.src}
+                    alt={artistProfiles[a.id].portrait?.alt}
                     width="600"
                     height="750"
                     loading="lazy"
@@ -187,29 +189,29 @@ export default function App() {
                 <div className="artist-info">
                   <span className="number">0{i + 1}</span>
                   <div>
-                    <h3>{a.name || a.specialty}</h3>
+                    <h3><a href={artistProfiles[a.id]?.path}>{artistProfiles[a.id]?.name ?? a.name}</a></h3>
                     {a.name && <p>{a.specialty}</p>}
                     <p>{a.description}</p>
                   </div>
-                  <button
-                    className="icon"
-                    aria-label={`Tenho interesse em ${a.name || a.specialty}`}
-                    onClick={() =>
-                      book({
-                        service: a.id === "moreira" ? "Piercing" : "Tatuagem",
-                        artist: a.name || a.specialty,
-                      })
-                    }
-                  >
+                  <a className="icon" href={artistProfiles[a.id]?.path} aria-label={`Conheça ${artistProfiles[a.id]?.name ?? a.name}`}>
                     <ArrowUpRight />
-                  </button>
+                  </a>
                 </div>
               </article>
             ))}
           </div>
+          <article className="ana-team-feature">
+            <div>
+              <h3>{anaBomsenhor.name}</h3>
+              <p>{anaBomsenhor.role} · {anaBomsenhor.experience} de experiência</p>
+            </div>
+            <a className="underlined" href={anaBomsenhor.path}>
+              Conheça Ana Bomsenhor <ArrowUpRight size={18} />
+            </a>
+          </article>
         </section>
         <section className="services section">
-          <div className="piercing">
+          <div id="piercing" className="piercing">
             <p className="eyebrow">04 / ALÉM DO TRAÇO</p>
             <h2 data-reveal="slide" data-direction="left">
               Um detalhe
@@ -229,6 +231,7 @@ export default function App() {
             >
               Conversar sobre meu piercing <ArrowUpRight size={18} />
             </button>
+            <a className="underlined" href="/piercings">Conheça o serviço de piercing <ArrowUpRight size={16} /></a>
             <Suspense fallback={<div className="jewel" />}>
               <Jewel />
             </Suspense>
@@ -251,10 +254,10 @@ export default function App() {
               Solicitar avaliação <ArrowUpRight size={18} />
             </button>
             <p className="secondary-service">
-              Também oferecemos micropigmentação.{" "}
-              <a href={site.whatsapp} target="_blank" rel="noopener noreferrer">
-                Saiba mais ↗
-              </a>
+              Conheça nossos serviços de{" "}
+              <a href={`${anaBomsenhor.path}#micropigmentacao`}>micropigmentação</a>
+              {" e "}
+              <a href={`${anaBomsenhor.path}#tatuagem-paramedica`}>tatuagem paramédica</a>.
             </p>
           </div>
         </section>

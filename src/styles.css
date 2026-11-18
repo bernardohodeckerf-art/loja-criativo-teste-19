@@ -1581,3 +1581,200 @@ html[data-ink-active] header {background:#080808;}
 @keyframes orbit-expand{from{opacity:0;transform:translate(-50%,-50%) scale(.5) rotate(-35deg)}to{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}}
 @media(max-width:600px){.instrument-coil{width:165px;left:-25px;top:12%;}.instrument-cartridge{width:90px;right:0;top:13%;}.instrument-bottle{width:150px;left:-12px;bottom:3%;}.instrument-pen{width:97px;right:1%;bottom:-12px;}.instrument-orbit{width:80vw;}.orbit-two{width:105vw;}}
 @media(prefers-reduced-motion:reduce){.tattoo-instruments{display:none;}}
+
+.ana-team-feature,
+.ana-profile-intro,
+.ana-specialties {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(1.5rem, 5vw, 5rem);
+}
+
+.ana-team-feature {
+  margin-top: 3rem;
+  padding-block: 2rem;
+  border-block: 1px solid currentColor;
+}
+
+.ana-team-feature h3,
+.ana-specialties h2 {
+  font-size: clamp(1.5rem, 3vw, 2.75rem);
+}
+
+.ana-profile-intro {
+  padding-top: clamp(8rem, 16vw, 14rem);
+  align-items: end;
+}
+
+.ana-profile-intro h1 {
+  margin-block: 1.5rem 1rem;
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: .92;
+}
+
+.ana-role,
+.ana-bio {
+  font-size: clamp(1.05rem, 1.6vw, 1.4rem);
+  line-height: 1.65;
+}
+
+.ana-specialties article {
+  scroll-margin-top: 6rem;
+}
+
+.ana-specialties > a,
+.ana-team-feature > a {
+  justify-self: start;
+}
+
+@media (max-width: 700px) {
+  .ana-team-feature,
+  .ana-profile-intro,
+  .ana-specialties {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hero {
+  min-height: min(38rem, 100svh);
+}
+
+.hero .hero-media {
+  object-fit: cover;
+  object-position: center;
+  filter: none;
+  opacity: 1;
+}
+
+.hero::after {
+  background: linear-gradient(0deg, #090909c9, transparent 48%, #09090955);
+}
+
+.hero .hero-content {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-block: 1.5rem;
+}
+
+.hero .hero-content h1 {
+  font-size: clamp(2.65rem, 7vw, 7rem);
+  text-shadow: 0 2px 1rem #0009;
+}
+
+.hero .hero-content h1 span {
+  display: block;
+  margin-top: .5rem;
+  font-size: .32em;
+  letter-spacing: .28em;
+}
+
+.hero .hero-actions {
+  gap: .75rem;
+  margin-top: 1.25rem;
+}
+
+.hero .hero-actions .button {
+  background: #111a;
+}
+
+.hero-scroll {
+  animation: hero-scroll 1.8s ease-in-out infinite;
+}
+
+#piercing {
+  scroll-margin-top: 6rem;
+}
+
+@media (min-aspect-ratio: 1/1) {
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: -2rem;
+    background: url("/media/estudio-hero.webp") center / cover;
+    filter: blur(26px) brightness(.62);
+  }
+
+  .hero .hero-media {
+    object-fit: contain;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll,
+  .hero > img.hero-media {
+    animation: none;
+  }
+}
+
+@keyframes hero-scroll {
+  50% { transform: translateY(.35rem); }
+}
+
+.artist-page-intro,
+.artist-page-bio {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 5vw, 5rem);
+}
+
+.artist-page-intro {
+  padding-top: clamp(7rem, 13vw, 12rem);
+  align-items: center;
+}
+
+.artist-page-intro h1 {
+  margin-block: 1.5rem;
+  font-size: clamp(3rem, 8vw, 8rem);
+  line-height: .95;
+}
+
+.artist-page-intro p,
+.artist-page-bio p {
+  margin-block: 1rem;
+}
+
+.artist-page-intro img {
+  width: 100%;
+  height: auto;
+  max-height: 75svh;
+  object-fit: contain;
+}
+
+.artist-highlights {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+  font-family: Georgia, serif;
+  font-size: clamp(1.1rem, 3vw, 1.7rem);
+}
+
+.artist-gallery .work img {
+  object-fit: contain;
+  filter: none;
+  transform: none;
+}
+
+.artist-gallery .work > span span {
+  display: block;
+}
+
+.artist-gallery small {
+  display: block;
+  margin-top: .4rem;
+}
+
+.lightbox {
+  touch-action: pan-y;
+}
+
+@media (max-width: 700px) {
+  .artist-page-intro,
+  .artist-page-bio {
+    grid-template-columns: 1fr;
+  }
+
+  .artist-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
