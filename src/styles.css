@@ -1955,3 +1955,25 @@ html[data-ink-active] header {background:#080808;}
   from { object-position: center 30%; }
   to { object-position: center 64%; }
 }
+
+.ana-profile-intro {
+  align-items: center;
+}
+
+.ana-profile-portrait {
+  display: block;
+  max-height: 72svh;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.ana-profile-intro .ana-bio {
+  grid-column: 2;
+}
+
+@media (max-width: 700px) {
+  .ana-profile-intro .ana-bio {
+    grid-column: auto;
+  }
+}

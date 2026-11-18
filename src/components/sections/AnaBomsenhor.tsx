@@ -29,6 +29,8 @@ export function AnaBomsenhor({ service }: { service?: "Micropigmentação" | "Ta
             <p className="ana-role">{service ? <a href={ana.path}>{ana.name}</a> : ana.role}</p>
             <p className="eyebrow">{ana.experience} de experiência</p>
           </div>
+          <img className="ana-profile-portrait" src={ana.portrait.src} alt={ana.portrait.alt}
+            width={ana.portrait.width} height={ana.portrait.height} fetchPriority="high" />
           <p className="ana-bio">{ana.biography}</p>
         </section>
         <section className="section ana-specialties" aria-label="Especialidades">
