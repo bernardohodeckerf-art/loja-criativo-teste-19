@@ -319,3 +319,54 @@ export const nicoWorks = [
     style: "Geométrico",
   },
 ];
+
+export const doniWorks = [
+  {
+    src: "/media/doni-trabalho-lettering-mao.webp",
+    width: 900,
+    height: 1600,
+    alt: "Lettering ornamental no dorso da mão",
+    caption: "Lettering ornamental no dorso da mão",
+    style: "Lettering",
+  },
+  {
+    src: "/media/doni-trabalho-aguia.webp",
+    width: 900,
+    height: 1600,
+    alt: "Águia com elementos geométricos e náuticos",
+    caption: "Águia com elementos geométricos e náuticos",
+    style: "Geométrico",
+  },
+  {
+    src: "/media/doni-trabalho-mae-e-bebe.webp",
+    width: 900,
+    height: 1600,
+    alt: "Tatuagem de mãe e bebê com nome e data",
+    caption: "Tatuagem de mãe e bebê com nome e data",
+    style: "Fine Line",
+  },
+  {
+    src: "/media/doni-trabalho-nome.webp",
+    width: 900,
+    height: 1600,
+    alt: "Nome em escrita cursiva",
+    caption: "Nome em escrita cursiva",
+    style: "Lettering",
+  },
+  {
+    src: "/media/doni-trabalho-amor-fati.webp",
+    width: 900,
+    height: 1600,
+    alt: "Figura alada e a inscrição Amor Fati",
+    caption: "Figura alada e a inscrição Amor Fati",
+    style: "Fine Line",
+  },
+  {
+    src: "/media/doni-trabalho-veleiro.webp",
+    width: 900,
+    height: 1600,
+    alt: "Veleiro sombreado em preto e cinza",
+    caption: "Veleiro sombreado em preto e cinza",
+    style: "Preto e cinza",
+  },
+];

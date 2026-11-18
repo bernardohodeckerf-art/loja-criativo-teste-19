@@ -18,3 +18,4 @@ Não foram recuperados os arquivos dos retratos de Moreira e Franja apresentados
 - `nico-trabalho-*.webp`: oito fotos do ZIP identificado pelo usuário como portfólio de Nico.
 - `estudio-11.webp`, `estudio-14.webp` e `estudio-17.webp`: quadros extraídos do vídeo do estúdio fornecido pelo usuário.
 - `rodrigo-remocao-laser.webp`: comparação de remoção do material do Rodrigo, exibida na página de remoção a laser.
+- `doni-trabalho-*.webp`: seis fotos HEIC com autoria de Doni confirmada pelo usuário.

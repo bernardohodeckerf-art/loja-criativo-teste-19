@@ -1,5 +1,5 @@
 import type { Media } from "./site";
-import { annaWorks, franjaPortrait, franjaWorks, moreiraPortrait, moreiraWorks, nicoWorks } from "./team-media";
+import { annaWorks, doniWorks, franjaPortrait, franjaWorks, moreiraPortrait, moreiraWorks, nicoWorks } from "./team-media";
 
 export type ArtistProfile = {
   name: string;
@@ -20,6 +20,7 @@ export const artistProfiles: Record<string, ArtistProfile> = {
     path: "/equipe/doni",
     role: "Tatuador",
     experience: "Tatuador desde 2018",
+    works: doniWorks,
     specialties: "Lettering, Blackwork, Fine Line e projetos sob medida.",
     biography: [
       "Me chamo Doni, tatuador desde 2018 e meus trabalhos giram em torno de Lettering, Blackwork, Fineline e projetos sob medida. Meu foco é criar tatuagens com identidade, bom acabamento e feitas com calma para entregar meu melhor.",
