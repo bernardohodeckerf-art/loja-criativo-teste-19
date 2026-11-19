@@ -1,33 +1,48 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export function ScrollVideo({ src, poster, title }: { src: string; poster: string; title: string }) {
-  const frame = useRef<HTMLElement>(null);
-  const [playing, setPlaying] = useState(false);
+  const player = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
+    const video = player.current;
+    if (!video || !("IntersectionObserver" in window)) return;
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
-    if (!("IntersectionObserver" in window)) return;
-    const visible = new IntersectionObserver(([entry]) => {
-      setPlaying(entry.isIntersecting && !motion.matches);
+    const connection = (navigator as Navigator & { connection?: { saveData: boolean } }).connection;
+    let inView = false;
+    const play = () => {
+      if (!inView || !video.paused || video.error) return;
+      video.muted = true;
+      void video.play().catch(() => {
+        // Keep the poster visible when the browser blocks playback.
+      });
+    };
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.intersectionRatio >= 0.35;
+      if (inView) play();
+      else video.pause();
     }, { threshold: 0.35 });
     const update = () => {
-      visible.disconnect();
-      setPlaying(false);
-      if (!motion.matches && frame.current) visible.observe(frame.current);
+      observer.disconnect();
+      inView = false;
+      if (motion.matches || connection?.saveData) video.pause();
+      else observer.observe(video);
     };
     update();
     motion.addEventListener("change", update);
+    window.addEventListener("touchend", play, { passive: true });
+    window.addEventListener("click", play);
     return () => {
-      visible.disconnect();
+      observer.disconnect();
       motion.removeEventListener("change", update);
+      window.removeEventListener("touchend", play);
+      window.removeEventListener("click", play);
     };
   }, []);
 
   return (
-    <figure ref={frame} data-reveal="rise">
+    <figure data-reveal="rise">
       <div className="scroll-video">
-        <img src={poster} alt="" loading="lazy" />
-        {playing && <video src={src} poster={poster} autoPlay muted loop playsInline aria-hidden="true" />}
+        <video ref={player} src={src} poster={poster} preload="none" muted loop playsInline aria-hidden="true" />
       </div>
       <figcaption>{title}</figcaption>
     </figure>

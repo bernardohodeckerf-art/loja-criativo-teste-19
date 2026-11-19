@@ -1,10 +1,12 @@
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { TattooInstruments } from "@/components/ui/TattooInstruments";
 import { site } from "@/data/site";
 
 export function Hero() {
   const [allowed, setAllowed] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
   useEffect(() => {
     const motion = matchMedia("(prefers-reduced-motion: reduce)");
     const update = () =>
@@ -17,6 +19,26 @@ export function Hero() {
     motion.addEventListener("change", update);
     return () => motion.removeEventListener("change", update);
   }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !allowed) return;
+    const play = () => {
+      if (!video.paused) return;
+      video.muted = true;
+      void video.play().catch(() => {
+        // Keep the poster visible when the browser blocks playback.
+      });
+    };
+    play();
+    window.addEventListener("touchend", play, { passive: true });
+    window.addEventListener("click", play);
+    return () => {
+      window.removeEventListener("touchend", play);
+      window.removeEventListener("click", play);
+    };
+  }, [allowed, videoFailed]);
+
   return (
     <section id="abertura" className="hero" aria-label="Good Vibe Tattoo Club">
       {site.hero && (
@@ -31,18 +53,18 @@ export function Hero() {
           fetchPriority="high"
         />
       )}
-      {site.hero && site.heroVideo && allowed && (
+      {site.hero && site.heroVideo && allowed && !videoFailed && (
         <video
+          ref={videoRef}
           className="hero-media"
           poster={site.hero.src}
           src={site.heroVideo}
-          preload="metadata"
+          preload="none"
           aria-hidden="true"
-          autoPlay
           muted
           loop
           playsInline
-          onError={() => setAllowed(false)}
+          onError={() => setVideoFailed(true)}
         />
       )}
       <div className="brand-intro" aria-hidden="true">

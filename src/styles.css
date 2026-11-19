@@ -2026,13 +2026,19 @@ html[data-ink-active] header {background:#080808;}
   background: #111;
 }
 
-.scroll-video img,
 .scroll-video video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
+}
+
+@media (max-width: 600px) {
+  .scroll-video {
+    aspect-ratio: 9 / 16;
+    max-height: 540px;
+  }
 }
 
 @media (min-width: 901px) {
